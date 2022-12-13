@@ -1,0 +1,24 @@
+server {
+  listen 80;
+  listen [::]:80;
+  server_name _;
+  return 301 https://${DOLLARFIX}host${DOLLARFIX}request_uri;
+}
+
+server {
+
+  listen 443 ssl;
+
+  ssl_certificate /etc/ssl/nginx-cert.crt;
+  ssl_certificate_key /etc/ssl/nginx-cert.key;
+  ssl_protocols TLSv1.2 TLSv1.3;
+
+  location / {
+    proxy_pass ${BACKEND_URL};
+  }
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/html;
+  }
+}
