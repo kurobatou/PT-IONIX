@@ -8,7 +8,7 @@
 
 if [ $CHECK == 4 ] ; then
 
-  mysqldump -h $DB_HOST -P $DB_PORT -u $DB_USER -p $DB_PASS $DB_NAME | bzcat dump.bz2
+  mysqldump -h $DB_HOST -P $DB_PORT -u $DB_USER --password=$DB_PASS $DB_NAME | bzcat > dump.bz2 
   echo "Dump completo"
 
 else
